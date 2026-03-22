@@ -1,0 +1,44 @@
+import express  from 'express';
+import cors  from 'cors';
+import dotenv  from 'dotenv';
+import connectDB  from './config/db.js';
+
+import authRoutes  from './routes/authRoutes.js';
+import serviceRoutes  from './routes/serviceRoutes.js';
+import requestRoutes  from './routes/requestRoutes.js';
+import eventRoutes  from './routes/eventRoutes.js';
+import reportRoutes  from './routes/reportRoutes.js';
+import notificationRoutes  from './routes/notificationRoutes.js';
+import httpstatustext from './utils/httpstatustext.js';
+
+dotenv.config();
+connectDB();
+
+const app = express();
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// ALL Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/requests', requestRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/reports', reportRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/uploads', express.static('uploads'));
+
+// // Test Route
+// app.all('/*', (req, res) => {
+//   res.send('this resourse is not available');
+// });
+
+app.use((err,req,res,next)=>{
+  res.status(err.StatusCode||500).json({status :err.StatusText||httpstatustext.ERROR,message:err.message})
+})
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
+);
