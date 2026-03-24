@@ -72,6 +72,7 @@ const Studentregister = asyncwrapper(async (req, res, next) => {
 
   res.status(201).json({
     status: httpstatustext.SUCCESS,
+    token,
     message: "Student registered successfully",
     token,
     email: user.email
@@ -126,6 +127,7 @@ const Employeeregister = asyncwrapper(async (req, res, next) => {
 
   res.status(201).json({
     status: httpstatustext.SUCCESS,
+    token,
     message: "Employee created",
     email: user.email,
     role: employee.role

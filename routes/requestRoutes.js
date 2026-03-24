@@ -20,7 +20,7 @@ router.post('/', protect, allowRoles('student'), submitRequest);
 router.get('/my', protect, allowRoles('student'), getMyRequests);
 
 // مراجعة طلب (staff)
-router.put('/:id/review', protect, allowRoles('staff'), reviewRequest);
+router.put('/:id/review', protect, allowRoles('staff','admin'), reviewRequest);
 
 // إلغاء طلب (student)
 router.put('/:id/cancel', protect, allowRoles('student'), cancelRequest);
